@@ -1,0 +1,60 @@
+pip install nltk
+
+import nltk
+nltk.download('punkt')
+
+from nltk.tokenize import word_tokenize
+
+text=('India will play against Australia, this summer. It will be an exciting series.')
+print(text)
+
+words=word_tokenize(text)
+print(words)
+
+len(words)
+
+from nltk.probability import FreqDist
+freq=FreqDist(words).most_common(10)
+print(freq)
+
+import pandas as pd
+import matplotlib.pyplot as plt
+freq=pd.Series(dict(freq))
+fig,ax=plt.subplots(figsize=(10,5))
+freq.plot(kind='bar')
+plt.title('Frequency distribution of words')
+plt.xlabel('count')
+plt.show()
+
+pip install wordcloud
+
+from wordcloud import WordCloud,STOPWORDS
+stop_w=set(STOPWORDS)
+word_cloud=WordCloud(height=800,width=800,stopwords=stop_w).generate(text)
+
+plt.figure(figsize=(10,5))
+plt.imshow(word_cloud)
+plt.axis('off')
+plt.show()
+
+pip install words
+
+import nltk
+nltk.download('words')
+
+from nltk.corpus import words
+from nltk.metrics.distance import edit_distance
+cw=words.words()
+
+iw=['happpy','amzzzzzing','intelligeint']
+for word in iw:
+    temp=[(edit_distance(word,w),w) for w in cw if w[0]==word[0]]
+    print(sorted(temp,key=lambda val:val[0])[0][1])
+
+text=text.lower()
+
+import re
+text=re.sub('[^A-Za-z0-9]','',text)
+text=re.sub('\*s\d\s*','',text).split()
+print(text)
+
